@@ -2,26 +2,84 @@
 @tailwind components;
 @tailwind utilities;
 
-:root {
-  --background: #ffffff;
-  --foreground: #171717;
-}
+@import url("https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=JetBrains+Mono:wght@400;500&display=swap");
 
-@media (prefers-color-scheme: dark) {
+@layer base {
   :root {
-    --background: #0a0a0a;
-    --foreground: #ededed;
+    --background: #f1f5f9;
+    --foreground: #0a0f1e;
+    --accent: #f0b429;
+    --accent-secondary: #2dd4bf;
+    --accent-bg: rgba(240, 180, 41, 0.08);
+    --card-bg: #ffffff;
+    --sidebar-bg: #ffffff;
+    --border: #cbd5e1;
+    --muted: #64748b;
+    --nav-bg: rgba(255, 255, 255, 0.90);
   }
-}
 
-body {
-  color: var(--foreground);
-  background: var(--background);
-  font-family: Arial, Helvetica, sans-serif;
+  .dark {
+    --background: #0a0f1e;
+    --foreground: #e2e8f0;
+    --accent: #f0b429;
+    --accent-secondary: #2dd4bf;
+    --accent-bg: rgba(240, 180, 41, 0.07);
+    --card-bg: #0d1530;
+    --sidebar-bg: #0d1220;
+    --border: #1e2d4a;
+    --muted: #94a3b8;
+    --nav-bg: rgba(10, 15, 30, 0.85);
+  }
+
+  html {
+    scroll-behavior: smooth;
+  }
+
+  body {
+    @apply bg-[var(--background)] text-[var(--foreground)] transition-colors duration-300;
+    font-family: 'Inter', system-ui, sans-serif;
+  }
 }
 
 @layer utilities {
-  .text-balance {
-    text-wrap: balance;
+  .gradient-text {
+    background: linear-gradient(135deg, var(--accent) 0%, var(--accent-secondary) 100%);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    background-clip: text;
   }
+
+  .section-padding {
+    @apply py-20 px-6 lg:px-10;
+  }
+
+  .card-hover {
+    @apply transition-all duration-300 hover:shadow-xl hover:-translate-y-1;
+  }
+}
+
+::-webkit-scrollbar { width: 5px; }
+::-webkit-scrollbar-track { background: var(--background); }
+::-webkit-scrollbar-thumb { background: var(--accent); border-radius: 3px; }
+::-webkit-scrollbar-thumb:hover { background: var(--accent-secondary); }
+
+::selection { background: rgba(240, 180, 41, 0.2); }
+
+@keyframes marquee-ltr {
+  from { transform: translateX(0); }
+  to   { transform: translateX(-50%); }
+}
+@keyframes marquee-rtl {
+  from { transform: translateX(-50%); }
+  to   { transform: translateX(0); }
+}
+.animate-marquee-ltr {
+  animation: marquee-ltr 28s linear infinite;
+}
+.animate-marquee-rtl {
+  animation: marquee-rtl 28s linear infinite;
+}
+.marquee-track:hover .animate-marquee-ltr,
+.marquee-track:hover .animate-marquee-rtl {
+  animation-play-state: paused;
 }
